@@ -18,6 +18,7 @@ public class User {
     private String userId;
 
     private String userFirstName;
+    private String phoneNumber;
 
     private String tag;
     private String userLastName;
