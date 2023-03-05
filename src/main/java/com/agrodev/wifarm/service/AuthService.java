@@ -50,7 +50,7 @@ public class AuthService implements UserDetailsService {
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
                     user.getUserName(),
-                    user.getUserPassword(),
+                    user.getPassword(),
                     getAuthority(user)
             );
         } else {

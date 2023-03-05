@@ -1,13 +1,13 @@
 package com.agrodev.wifarm.service;
 
-import com.agrodev.wifarm.entity.Farm;
-import com.agrodev.wifarm.repository.FarmRepository;
+import com.agrodev.wifarm.entity.AdminUser;
+import com.agrodev.wifarm.entity.Pojo.LoginRequest;
+import com.agrodev.wifarm.repository.AdminRepository;
 import com.agrodev.wifarm.repository.RoleRepository;
 import com.agrodev.wifarm.repository.UserRepository;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.entity.Role;
 import com.agrodev.wifarm.entity.User;
-import com.agrodev.wifarm.entity.Pojo.LoginRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +20,17 @@ import org.springframework.util.ObjectUtils;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepo;
-
+    @Autowired
+    private AdminRepository adminRepository;
     @Autowired
     private RoleRepository roleRepo;
-    @Autowired
-    private FarmRepository farmRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -42,7 +38,38 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
+
+
+    public void generateOneTimePassword(String email, User user) throws UnsupportedEncodingException, MessagingException {
+
+        Random random = new Random();
+
+        String OTP = String.format("%04d", random.nextInt(10000));
+
+        BCryptPasswordEncoder otppasswordEncoder = new BCryptPasswordEncoder();
+        String encodeOTP = otppasswordEncoder.encode(OTP);
+        user.setVerificationOtp(OTP);
+        user.setOtpRequestTime(new Date());
+
+        userRepo.save(user);
+        logger.info(" Email not Null and OTP is " + user.getEmail() + " Is " + OTP + " Encoded Otp " + encodeOTP);
+//        userRepository.sendNotificationByEmail(OTP, new java.util.Date(), email);
+        NService.sendNotificationOTP(user, OTP);
+
+    }
+
+    public void generateEmailOneTimePassword(User user) throws UnsupportedEncodingException, MessagingException {
+
+        Random random = new Random();
+        String OTP = String.format("%04d", random.nextInt(10000));
+        user.setVerificationOtp(passwordEncoder.encode(OTP));
+        user.setOtpRequestTime(new Date());
+        userRepo.save(user);
+        NService.sendNotificationOTP(user, OTP);
+    }
+
     public void initRoleAndUser() {
+
 
         Role adminRole = new Role();
         adminRole.setRoleName("Admin");
@@ -56,39 +83,14 @@ public class UserService {
 
         User adminUser = new User();
         adminUser.setUserName("admin123");
-        adminUser.setUserPassword(passwordEncoder.encode("admin@pass"));
-        adminUser.setUserFirstName("admin");
-        adminUser.setUserLastName("admin");
+        adminUser.setPassword(passwordEncoder.encode("admin@pass"));
+        adminUser.setFirstName("admin");
+        adminUser.setLastName("admin");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
         adminUser.setRole(adminRoles);
         userRepo.save(adminUser);
 
-    }
-
-    public void generateOneTimePassword(String email, User user) throws UnsupportedEncodingException, MessagingException {
-
-        Random random = new Random();
-
-        String OTP = String.format("%04d", random.nextInt(10000));
-
-        BCryptPasswordEncoder otppasswordEncoder = new BCryptPasswordEncoder();
-        String encodeOTP = otppasswordEncoder.encode(OTP);
-
-        logger.info(" Email not Null and OTP is " + user.getEmail() + " Is " + OTP + " Encoded Otp " + encodeOTP);
-//        userRepository.sendNotificationByEmail(OTP, new java.util.Date(), email);
-        NService.sendNotificationOTP(user, OTP);
-
-    }
-
-    public void generateEmailOneTimePassword(String email, User user) throws UnsupportedEncodingException, MessagingException {
-
-        Random random = new Random();
-        // String OTP = RandomString.make(4);
-        String OTP = String.format("%04d", random.nextInt(10000));
-        // In actual Sense, we are to save the encoded one so it is not visibile in the database
-//        userRepository.sendNotificationByEmail("Use the following OTP :" + OTP, new java.util.Date(), email);
-        NService.sendNotificationOTP(user, OTP);
     }
 
     public ResponseEntity<StandardResponse> registerNewUser(User user) {
@@ -98,22 +100,20 @@ public class UserService {
             roles.add(role);
 
             Random customerRand = new Random();
+            String vOtp = String.format("%04d", customerRand.nextInt(10000));
+
             boolean loggedUser = userRepo.findByUserName(user.getUserName()).isPresent();
             if(!loggedUser) {
                 user.setUserId(String.format("%04d", customerRand.nextInt(10000)));
+                user.setVerificationOtp(vOtp);
                 user.setRole(roles);
                 user.setTag("User");
-                user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-                Farm farm = new Farm();
-                farm.setCustomerId(user.getUserId());
-                farm.setPrincipalAmount(0.00);
-                farm.setAccuredAmount(0.00);
-                farm.setDailyInterestRate(0.00);
-                farm.setMonthlyInterestRate(0.00);
-                farm.setPlanted(false);
+                NService.sendNotificationOTP(user, "Thank you for signing up. <br /> Use the following OTP to Validate your email <strong> " + vOtp + "</strong>" );
+                NService.sendRegistrationNotification(user);
 
-                farmRepository.save(farm);
+
                 User savedUser = userRepo.save(user);
                 return StandardResponse.sendHttpResponse(true, "Operation successful!", savedUser, "200");
             }else{
@@ -124,6 +124,8 @@ public class UserService {
             return StandardResponse.sendHttpResponse(false, "Could not save user");
         }
     }
+
+
 
     public ResponseEntity<StandardResponse> resendOtp(String userEmail)
             throws UnsupportedEncodingException, MessagingException {
@@ -156,7 +158,7 @@ public class UserService {
         if (!ObjectUtils.isEmpty(datas)) {
 
             // Generate and Send an OTP that would be used for the Password Reset
-            generateEmailOneTimePassword(useremail, datas);
+            generateEmailOneTimePassword(datas);
 
             sr.setMessage("Email Successfully Sent");
             sr.setStatus(true);
@@ -178,7 +180,7 @@ public class UserService {
 
     }
 
-    public ResponseEntity<StandardResponse> verifyCode(String verificationOtp, LoginRequest user) {
+    public ResponseEntity<StandardResponse> verifyCode(String verificationOtp, String email) {
 
         User data = userRepo.findByVerificationOtp(verificationOtp).get();
 //        User data = userRepository.findByOneTimePassword(oneTimePassword).get();
@@ -191,7 +193,7 @@ public class UserService {
             sr.setStatus(true);
             sr.setStatuscode("200");
 
-            User userEmail = userRepo.findByUserName(user.getUserName()).get();
+            User userEmail = userRepo.findByUserName(email).get();
 
             System.out.println("Hello ... 3");
 
@@ -251,7 +253,7 @@ public class UserService {
 //
 //                }
 
-                datas.setUserPassword(encodepassword);
+                datas.setPassword(encodepassword);
 //                datas.setVerificationOtp(otp);
 
                 userRepo.save(datas);

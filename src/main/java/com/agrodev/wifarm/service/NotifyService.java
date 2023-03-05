@@ -1,19 +1,23 @@
 package com.agrodev.wifarm.service;
 
 
-import com.agrodev.wifarm.entity.User;
-import com.agrodev.wifarm.service.SendGridEmailService;
-import org.jobrunr.scheduling.JobScheduler;
+import java.util.Map;
+
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.linkbuilder.ILinkBuilder;
 
-import javax.mail.MessagingException;
-import java.util.Map;
+import org.jobrunr.scheduling.JobScheduler;
+
+import com.agrodev.wifarm.entity.User;
+
+
 
 
 @Service
@@ -65,11 +69,11 @@ public class NotifyService {
 
 
             Context context = new Context();
-
+            context.setVariable("user", user);
             String message = "Your Verification OTP is : " + user.getVerificationOtp();
 
 
-            this.sendNotification( "Email/wifarm/registration", "NOVA Registration", message , user , context);
+            this.sendNotification( "emails/registration", "NOVA Registration", message , user , context);
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -89,7 +93,7 @@ public class NotifyService {
             String message = "Your Password Reset OTP is : " + user.getVerificationOtp();
 
 
-            this.sendNotification( "Email/spearhead/otp", "NOVA -- Password Reset", message, user , context);
+            this.sendNotification( "emails/otp", "NOVA -- Password Reset", message, user , context);
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -104,7 +108,8 @@ public class NotifyService {
         try {
 
             Context context = new Context();
-            this.sendNotification( "Email/spearhead/otp", "NOVA -- OTP", OTP, user , context);
+            context.setVariable("user", user);
+            this.sendNotification( "emails/registration", "NOVA -- OTP", OTP, user , context);
 
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
@@ -121,11 +126,10 @@ public class NotifyService {
 
 
             Context context = new Context();
-
             String message = "Thank you for successful login " ;
 
 
-            this.sendNotification( "Email/spearhead/welcome", "NOVA Mobile App Login",message, user , context);
+            this.sendNotification( "emails/registration", "NOVA Mobile App Login",message, user , context);
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -139,7 +143,7 @@ public class NotifyService {
         try {
 
             jobScheduler.enqueue(() -> sendGrid.sendGridEmail(subject, recipientuser.getEmail() ,
-                    recipientuser.getUserFirstName(), messages, template ,  context));
+                    recipientuser.getFirstName(), messages, template ,  context));
         }  catch (Exception e) {
             System.out.println(e.getMessage());
         }
