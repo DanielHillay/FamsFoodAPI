@@ -21,6 +21,8 @@ public class User {
     private String phoneNumber;
 
     private String tag;
+    private String verificationOtp;
+    private boolean isValidated;
     private String userLastName;
     private String userPassword;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

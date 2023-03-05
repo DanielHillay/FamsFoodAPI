@@ -1,4 +1,4 @@
-package com.agrodev.wifarm.entity;
+package com.agrodev.wifarm.entity.Pojo;
 
 public class LoginRequest {
 
