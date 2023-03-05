@@ -1,6 +1,6 @@
 package com.agrodev.wifarm.controller;
 
-import com.agrodev.wifarm.entity.LoginRequest;
+import com.agrodev.wifarm.entity.Pojo.LoginRequest;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;

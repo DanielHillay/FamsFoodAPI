@@ -1,7 +1,7 @@
 package com.agrodev.wifarm.service;
 
 import com.agrodev.wifarm.repository.UserRepository;
-import com.agrodev.wifarm.entity.LoginRequest;
+import com.agrodev.wifarm.entity.Pojo.LoginRequest;
 import com.agrodev.wifarm.entity.LoginResponse;
 import com.agrodev.wifarm.util.JwtUtil;
 import com.agrodev.wifarm.entity.User;
