@@ -13,10 +13,11 @@ public class CropController {
     @Autowired
     private CropService cropService;
 
-    @PostMapping("/createcrop")
-    public ResponseEntity<StandardResponse> createCrop(@RequestBody Crops crops, @RequestParam("farmId") Long farmId){
-        return cropService.createCropForCustomer(crops, farmId);
+    @PostMapping("/addcroptofarm")
+    public ResponseEntity<StandardResponse> addCrop(@RequestBody Crops crops, @RequestParam("farmId") Long farmId){
+        return cropService.addCropToFarm(crops, farmId);
     }
+
 
 //    @PostMapping("/addcroptofarm")
 //    public ResponseEntity<StandardResponse> addCropToFarm(@RequestParam("cropName") String cropName, @RequestParam("farmId") Long farmId){

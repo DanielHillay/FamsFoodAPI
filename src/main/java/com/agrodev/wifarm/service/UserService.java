@@ -1,13 +1,11 @@
 package com.agrodev.wifarm.service;
 
-import com.agrodev.wifarm.entity.AdminUser;
+import com.agrodev.wifarm.entity.*;
 import com.agrodev.wifarm.entity.Pojo.LoginRequest;
 import com.agrodev.wifarm.repository.AdminRepository;
+import com.agrodev.wifarm.repository.FarmRepository;
 import com.agrodev.wifarm.repository.RoleRepository;
 import com.agrodev.wifarm.repository.UserRepository;
-import com.agrodev.wifarm.entity.StandardResponse;
-import com.agrodev.wifarm.entity.Role;
-import com.agrodev.wifarm.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,8 @@ public class UserService {
     private AdminRepository adminRepository;
     @Autowired
     private RoleRepository roleRepo;
+    @Autowired
+    private FarmRepository farmRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -84,8 +84,8 @@ public class UserService {
         User adminUser = new User();
         adminUser.setUserName("admin123");
         adminUser.setPassword(passwordEncoder.encode("admin@pass"));
-        adminUser.setFirstName("admin");
-        adminUser.setLastName("admin");
+        adminUser.setFirstName("AdminDan");
+        adminUser.setLastName("Hillary");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
         adminUser.setRole(adminRoles);
@@ -109,6 +109,15 @@ public class UserService {
                 user.setRole(roles);
                 user.setTag("User");
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+                Farm farm = new Farm();
+                farm.setCustomerId(user.getUserId());
+                farm.setLandMass(0);
+                farm.setPrincipalAmount(0);
+                farm.setAccuredAmount(0);
+                farm.setSquareMeters(0);
+
+                farmRepository.save(farm);
 
                 NService.sendNotificationOTP(user, "Thank you for signing up. <br /> Use the following OTP to Validate your email <strong> " + vOtp + "</strong>" );
                 NService.sendRegistrationNotification(user);

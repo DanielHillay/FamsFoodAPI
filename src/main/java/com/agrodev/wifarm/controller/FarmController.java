@@ -13,15 +13,6 @@ public class FarmController {
     @Autowired
     private FarmService farmService;
 
-    @PostMapping("/createfarm")
-    public ResponseEntity<StandardResponse> createFarm(@RequestBody Farm farm){
-        return farmService.createFarm(farm);
-    }
-
-    @PutMapping("/updatefarm")
-    public ResponseEntity<StandardResponse> updateFarm(@RequestBody Farm farm){
-        return farmService.updateFarm(farm);
-    }
 
     @GetMapping("/getfarmbycustomerid")
     public ResponseEntity<StandardResponse> getFarmByCustomer(@RequestParam("customerId") String customerId){
@@ -29,7 +20,7 @@ public class FarmController {
     }
 
     @PostMapping("/createfarmforcustomer")
-    public ResponseEntity<StandardResponse> createFarmForUser(@RequestBody Farm farm, @RequestParam("userId") Long userId){
+    public ResponseEntity<StandardResponse> createFarmForUser(@RequestBody Farm farm, @RequestParam("userId") String userId){
         return farmService.createFarmForCustomer(farm, userId);
     }
 

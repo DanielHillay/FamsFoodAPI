@@ -34,11 +34,10 @@ public class FarmService {
         }
     }
 
-    public ResponseEntity<StandardResponse> createFarmForCustomer(Farm farm, Long userId) {
+    public ResponseEntity<StandardResponse> createFarmForCustomer(Farm farm, String userId) {
         try {
-            User user = userRepository.findById(userId).get();
-            farm.setCustomerId(user.getUserId());
-            return StandardResponse.sendHttpResponse(true, "Successful", farm);
+            farm.setCustomerId(userId);
+            return StandardResponse.sendHttpResponse(true, "Successful", farmRepository.save(farm));
         } catch (Exception e) {
             return StandardResponse.sendHttpResponse(false, "Could not create Farm for customer");
         }
@@ -46,8 +45,8 @@ public class FarmService {
 
     public ResponseEntity<StandardResponse> getFarmByCustomerId(String customerId) {
         try {
-            List<Farm> farmList = farmRepository.findByCustomerId(customerId);
-            return StandardResponse.sendHttpResponse(true, "Successful");
+            Farm farm = farmRepository.findByCustomerId(customerId).get();
+            return StandardResponse.sendHttpResponse(true, "Successful", farm);
         } catch (Exception e) {
             return StandardResponse.sendHttpResponse(false, "Could not get user FARMS");
         }
@@ -55,12 +54,7 @@ public class FarmService {
 
     public ResponseEntity<StandardResponse> updateFarmForUser(Farm farm, Long userId) {
         try {
-            List<Farm> farmList = farmRepository.findByCustomerId(userRepository.findById(userId).get().getUserId());
-            for(Farm fa : farmList){
-                if(fa.equals(farm)){
-                    farmRepository.save(fa);
-                }
-            }
+            Farm farmList = farmRepository.findByCustomerId(userRepository.findById(userId).get().getUserId()).get();
             return StandardResponse.sendHttpResponse(true, "Successful");
         } catch (Exception e) {
             return StandardResponse.sendHttpResponse(false, "Could not update farm for user");

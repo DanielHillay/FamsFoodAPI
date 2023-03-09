@@ -19,10 +19,14 @@ public class MarketCrops {
     private String cropCategory;
     private String cropName;
     private Double cropEstimatedDuration;
-    private Double price;
-    private  boolean isAvailablle;
+    private boolean isAvailablle;
+    private boolean isPlanted;
+    private Date datePlanted;
+    private double cropPrice;
+    private double accruedAmount;
+    private double squareMeters;
     private double dailyInterestRate;
     private double monthlyInterestRate;
-    private double estimatedYeildRate;
+    private double lifeCycleYieldRate;
     private String imageUrl;
 }

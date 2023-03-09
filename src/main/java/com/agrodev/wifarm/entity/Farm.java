@@ -14,7 +14,7 @@ public class Farm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long farmId;
     private double landMass;
-    private Double squareMeters;
+    private double squareMeters;
     private double dailyInterestRate;
     private double monthlyInterestRate;
     private boolean isLease;
@@ -22,8 +22,8 @@ public class Farm {
     private boolean isPlanted;
     private String customerId;
     private String farmLocation;
-    private Double principalAmount;
-    private Double accuredAmount;
+    private double principalAmount;
+    private double accuredAmount;
     private double estimatedYeildRate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -36,4 +36,5 @@ public class Farm {
             }
     )
     private Set<Crops> cropsList;
+
 }
