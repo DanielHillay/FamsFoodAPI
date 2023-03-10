@@ -70,26 +70,29 @@ public class UserService {
 
     public void initRoleAndUser() {
 
-
-        Role adminRole = new Role();
-        adminRole.setRoleName("Admin");
-        adminRole.setRoleDescription("Admin role");
-        roleRepo.save(adminRole);
-
+        if(roleRepo.findByRoleName("Admin").isEmpty()) {
+            Role adminRole = new Role();
+            adminRole.setRoleName("Admin");
+            adminRole.setRoleDescription("Admin role");
+            roleRepo.save(adminRole);
+            if(userRepo.findByUserName("admin123").isEmpty()){
+                User adminUser = new User();
+                adminUser.setUserName("admin123");
+                adminUser.setPassword(passwordEncoder.encode("admin@pass"));
+                adminUser.setFirstName("AdminDan");
+                adminUser.setLastName("Hillary");
+                Set<Role> adminRoles = new HashSet<>();
+                adminRoles.add(adminRole);
+                adminUser.setRole(adminRoles);
+                userRepo.save(adminUser);
+            }
+        }
         Role userRole = new Role();
-        userRole.setRoleName("User");
-        userRole.setRoleDescription("Default role for newly created record");
-        roleRepo.save(userRole);
-
-        User adminUser = new User();
-        adminUser.setUserName("admin123");
-        adminUser.setPassword(passwordEncoder.encode("admin@pass"));
-        adminUser.setFirstName("AdminDan");
-        adminUser.setLastName("Hillary");
-        Set<Role> adminRoles = new HashSet<>();
-        adminRoles.add(adminRole);
-        adminUser.setRole(adminRoles);
-        userRepo.save(adminUser);
+        if(roleRepo.findByRoleName("User").isEmpty()) {
+            userRole.setRoleName("User");
+            userRole.setRoleDescription("Default role for newly created record");
+            roleRepo.save(userRole);
+        }
 
     }
 

@@ -40,4 +40,12 @@ public class MarketService {
             cr.setCropPrice(cr.getCropPrice() + cr.getAccruedAmount());
         }
     }
+
+    public ResponseEntity<StandardResponse> getAllMarketCrops() {
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful", marketCropsRepo.findAll());
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not get all crops in the market");
+        }
+    }
 }
