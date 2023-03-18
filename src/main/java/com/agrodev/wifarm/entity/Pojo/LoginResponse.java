@@ -1,4 +1,6 @@
-package com.agrodev.wifarm.entity;
+package com.agrodev.wifarm.entity.Pojo;
+
+import com.agrodev.wifarm.entity.User;
 
 public class LoginResponse {
 

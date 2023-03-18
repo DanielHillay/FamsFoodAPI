@@ -5,19 +5,44 @@ import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.service.LandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/land")
+@RequestMapping("/api/land")
 public class LandController {
     @Autowired
     private LandService landService;
 
-    @PostMapping("/reigsterland")
+    @PostMapping("/reigsterexistingland")
     public ResponseEntity<StandardResponse> registerLand(@RequestBody Land land){
+        return landService.registerExistingLand(land);
+    }
+
+    @GetMapping("/getcroplocation")
+    public ResponseEntity<StandardResponse> getCropLocation(@RequestParam("cropName") String cropName){
+        return landService.getCultivationLocation(cropName);
+    }
+    @PostMapping("/registernewland")
+    public ResponseEntity<StandardResponse> registerNewLand(@RequestBody Land land){
         return landService.registerNewLand(land);
+    }
+    @GetMapping("/getalllands")
+    public ResponseEntity<StandardResponse> getAllLands(){
+        return landService.getAllLands();
+    }
+
+    @GetMapping("/getlandbyid")
+    public ResponseEntity<StandardResponse> getLandById(@RequestParam("id") Long id){
+        return landService.getLandById(id);
+    }
+    @PutMapping("/updateland")
+    public ResponseEntity<StandardResponse> updateLand(@RequestBody Land land){
+        return landService.updateLand(land);
+    }
+    @DeleteMapping("/deleteland")
+    public ResponseEntity<StandardResponse> deleteLand(@RequestParam("id") Long id){
+        return landService.deleteLand(id);
     }
 }

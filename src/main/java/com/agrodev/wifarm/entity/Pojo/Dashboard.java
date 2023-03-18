@@ -16,6 +16,9 @@ public class Dashboard {
     private double numOfCrops;
     private Double principalAmount;
     private Double accuredAmount;
+    private int monthsLeft;
+    private int daysLeft;
+    private int yearsLeft;
     private Set<Crops> cropsList;
 
 }

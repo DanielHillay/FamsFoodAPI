@@ -17,8 +17,8 @@ public class Crops {
     private String cropCategory;
     private Long farmId;
     private String cropName;
-    private Double cropEstimatedDuration;
-    private Double cropActualDuration;
+    private Integer cropEstimatedDurationInDays;
+    private Integer cropActualDuration;
     private Date plantDate;
     private Date purchaseDate;
     private int amountPlanted;

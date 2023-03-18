@@ -2,6 +2,7 @@ package com.agrodev.wifarm.service;
 
 import com.agrodev.wifarm.entity.Crops;
 import com.agrodev.wifarm.entity.Farm;
+import com.agrodev.wifarm.entity.MarketCrops;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.repository.CropRepository;
 import com.agrodev.wifarm.repository.FarmRepository;
@@ -18,25 +19,28 @@ public class CropService {
     @Autowired
     private FarmRepository farmRepository;
 
-    public ResponseEntity<StandardResponse> addCropToFarm(Crops crops, Long farmId) {
+    public ResponseEntity<StandardResponse> addExistingCropToFarm(Crops crops, Long farmId) {
         try {
-            int isPresent = 0;
             Farm farm = farmRepository.findById(farmId).get();
             for(Crops cr : farm.getCropsList()){
                 if(cr.getCropName().equalsIgnoreCase(crops.getCropName())){
                     cr.setAmountPlanted(crops.getAmountPlanted());
-                    isPresent = 1;
+                    cr.setPrincipalAmount(cr.getPrincipalAmount() + (cr.getAmountPlanted() * cr.getPrice()));
+                    cropRepository.save(cr);
                 }
             }
-            if(isPresent == 0){
-                farm.getCropsList().add(cropRepository.save(crops));
-            }
             farmRepository.save(farm);
-            cropRepository.save(crops);
             return StandardResponse.sendHttpResponse(true, "Successful");
         } catch (Exception e) {
             return StandardResponse.sendHttpResponse(false, "Could not add crop to farm land");
         }
     }
 
+    public ResponseEntity<StandardResponse> addCropToFarm(MarketCrops marketCrop, Long farmId){
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful");
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not add crop to farm");
+        }
+    }
 }

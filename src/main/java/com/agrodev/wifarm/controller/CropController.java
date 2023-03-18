@@ -1,6 +1,7 @@
 package com.agrodev.wifarm.controller;
 
 import com.agrodev.wifarm.entity.Crops;
+import com.agrodev.wifarm.entity.MarketCrops;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.service.CropService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ public class CropController {
     private CropService cropService;
 
     @PostMapping("/addcroptofarm")
-    public ResponseEntity<StandardResponse> addCrop(@RequestBody Crops crops, @RequestParam("farmId") Long farmId){
+    public ResponseEntity<StandardResponse> addCrop(@RequestBody MarketCrops crops, @RequestParam("farmId") Long farmId){
         return cropService.addCropToFarm(crops, farmId);
     }
 
 
-//    @PostMapping("/addcroptofarm")
-//    public ResponseEntity<StandardResponse> addCropToFarm(@RequestParam("cropName") String cropName, @RequestParam("farmId") Long farmId){
-//        return cropService.addCropToFarm(cropName, farmId);
+//    @PostMapping("/addexistingcroptofarm")
+//    public ResponseEntity<StandardResponse> addExistingCropToFarm(@RequestParam("cropName") String cropName, @RequestParam("farmId") Long farmId){
+//        return cropService.addExistingCropToFarm(cropName, farmId);
 //    }
 }
