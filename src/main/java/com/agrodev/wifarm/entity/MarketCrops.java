@@ -31,6 +31,7 @@ public class MarketCrops {
     private double dailyInterestRate;
     private double monthlyInterestRate;
     private double lifeCycleYieldRate;
+    private String description;
     private String imageUrl;
     private String photo;
 }
