@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @RequiredArgsConstructor
 @Data
-public class Tasks {
+public class Notification {
     @Id
     @GeneratedValue
     private Long id;
