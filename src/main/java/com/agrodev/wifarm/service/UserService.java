@@ -1,9 +1,7 @@
 package com.agrodev.wifarm.service;
 
 import com.agrodev.wifarm.entity.*;
-import com.agrodev.wifarm.entity.Pojo.LoginRequest;
 import com.agrodev.wifarm.repository.AdminRepository;
-import com.agrodev.wifarm.repository.FarmRepository;
 import com.agrodev.wifarm.repository.RoleRepository;
 import com.agrodev.wifarm.repository.UserRepository;
 import org.slf4j.Logger;
@@ -29,8 +27,6 @@ public class UserService {
     private AdminRepository adminRepository;
     @Autowired
     private RoleRepository roleRepo;
-    @Autowired
-    private FarmRepository farmRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -113,14 +109,7 @@ public class UserService {
                 user.setTag("User");
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-                Farm farm = new Farm();
-                farm.setCustomerId(user.getUserId());
-                farm.setLandMass(0);
-                farm.setPrincipalAmount(0);
-                farm.setAccuredAmount(0);
-                farm.setSquareMeters(0);
-
-                farmRepository.save(farm);
+                Account account = new Account();
 
                 NService.sendNotificationOTP(user, "Thank you for signing up. <br /> Use the following OTP to Validate your email <strong> " + vOtp + "</strong>" );
                 NService.sendRegistrationNotification(user);
@@ -283,5 +272,47 @@ public class UserService {
             return new ResponseEntity<StandardResponse>(sr, HttpStatus.BAD_REQUEST);
         }
         // return null;
+    }
+
+    public ResponseEntity<StandardResponse> getAllUsers() {
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful", userRepo.findAll());
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not get all users");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> getUser(Long id){
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful", userRepo.findById(id));
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not get all users");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> updateUserInfo(User user){
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful", userRepo.save(user));
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not update user info");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> deleteAllUsers(){
+        try {
+            userRepo.deleteAll();
+            return StandardResponse.sendHttpResponse(true, "Successful");
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not delete users");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> deleteUser(Long id){
+        try {
+            userRepo.deleteById(id);
+            return StandardResponse.sendHttpResponse(true, "Successful");
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not delete users");
+        }
     }
 }

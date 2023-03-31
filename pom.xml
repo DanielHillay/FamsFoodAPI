@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.agrodev</groupId>
-    <artifactId>WiFarm</artifactId>
+    <artifactId>FamsFood</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>WiFarm</name>
-    <description>Project for Farm management</description>
+    <name>FamsFood</name>
+    <description>Project for Restaurant Application</description>
     <properties>
         <java.version>17</java.version>
     </properties>

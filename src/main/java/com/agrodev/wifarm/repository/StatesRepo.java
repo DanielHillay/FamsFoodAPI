@@ -1,12 +1,12 @@
 package com.agrodev.wifarm.repository;
 
-import com.agrodev.wifarm.entity.Notification;
+import com.agrodev.wifarm.entity.States;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface NotificationRepo extends JpaRepository<Notification, Long> {
-    List<Notification> findByHasRead(boolean b);
+public interface StatesRepo extends JpaRepository<States, Long> {
+    List<States> findByCountryName(String country);
 }

@@ -2,25 +2,20 @@ package com.agrodev.wifarm.entity;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 
 @Entity
-@Data
 @RequiredArgsConstructor
-public class Account {
-
+@Data
+public class States {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
-    private String accountType;
-    private String userId;
-    private String timeTableId;
-    private double kiloGrams;
-    private double subscriptionType;
-    private double accountBalance;
+    private Long id;
+    private String state;
+    private String countryName;
 }

@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 
 @RestController
-@RequestMapping("/api/registration")
+@RequestMapping("/api/auth")
 public class UserController {
 
     @Autowired
@@ -24,33 +24,28 @@ public class UserController {
         userService.initRoleAndUser();
     }
 
-//    @PostConstruct
-//    public void getWatchedPrices(){
-//        calculationService.getWatchedPrices();
-//    }
-
-    @PostMapping({"/registerNewUser"})
-    public ResponseEntity<StandardResponse> registerNewUser(@RequestBody User user) {
-        return userService.registerNewUser(user);
+    @GetMapping("/getallusers")
+    public ResponseEntity<StandardResponse> getAllUsers(){
+        return userService.getAllUsers();
     }
 
-    @PostMapping("/resendOTP")
-    public ResponseEntity<StandardResponse> resendOTP(@RequestParam("email") String email) throws MessagingException, UnsupportedEncodingException {
-        return userService.resendOtp(email);
+    @GetMapping("/getUser")
+    public ResponseEntity<StandardResponse> getUser(@RequestParam("id") Long id){
+        return userService.getUser(id);
     }
 
-    @PostMapping("/forgotpassword")
-    public ResponseEntity<StandardResponse> forgetPassword(@RequestParam("email") String email) throws MessagingException, UnsupportedEncodingException {
-        return userService.forgetpassword(email);
+    @PutMapping("/updateuserinfo")
+    public ResponseEntity<StandardResponse> updateUserInfo(@RequestBody User user){
+        return userService.updateUserInfo(user);
     }
 
-    @PostMapping("/verifycode")
-    public ResponseEntity<StandardResponse> verifyCode(@RequestParam("verificationOtp") String verificationOtp, @RequestParam("email") String email){
-        return userService.verifyCode(verificationOtp, email);
+    @DeleteMapping("/deleteallusers")
+    public ResponseEntity<StandardResponse> deleteAllUsers(){
+        return userService.deleteAllUsers();
     }
-    @GetMapping("/test")
-    public ResponseEntity<String> forTesting(){
-        return ResponseEntity.ok("This link is working");
+    @DeleteMapping("/deleteuser")
+    public ResponseEntity<StandardResponse> deleteUser(@RequestParam("id") Long id){
+        return userService.deleteUser(id);
     }
 
     @GetMapping({"/forAdmin"})

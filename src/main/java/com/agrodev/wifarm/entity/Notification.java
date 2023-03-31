@@ -21,5 +21,6 @@ public class Notification {
     private String cropCategory;
     private String cropName;
     private String adminName;
+    private boolean hasRead;
     private LocalDateTime notificationTime;
 }
