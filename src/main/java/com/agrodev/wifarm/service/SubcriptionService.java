@@ -1,16 +1,25 @@
 package com.agrodev.wifarm.service;
 
+import com.agrodev.wifarm.entity.Account;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.entity.Subscription;
+import com.agrodev.wifarm.repository.AccountRepository;
 import com.agrodev.wifarm.repository.SubscriptionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Service
 public class SubcriptionService {
     @Autowired
     private SubscriptionRepo subscriptionRepo;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private UpdateService updateService;
 
     public ResponseEntity<StandardResponse> createSubPlan(Subscription subscription) {
         try {
@@ -62,11 +71,46 @@ public class SubcriptionService {
         }
     }
 
-    public ResponseEntity<StandardResponse> subscribeToPlan(Long subId) {
+    public ResponseEntity<StandardResponse> subscribeToPlan(Long accountId, Long subId, String scheduleId) {
         try {
-            return StandardResponse.sendHttpResponse(true, "Successful");
+            Account account = accountRepository.findById(accountId).get();
+            Subscription sub = subscriptionRepo.findById(subId).get();
+            if(!account.getSubName().isEmpty()){
+                return StandardResponse.sendHttpResponse(true, "This account is already subscribed to a plan");
+            }else {
+                account.setSubName(sub.getSubName());
+                account.setSubDate(new Date());
+                account.setSubTime(LocalDateTime.now());
+                account.setScheducleId(scheduleId);
+
+                accountRepository.save(account);
+                updateService.endSubscription(account.getAccountId(), sub.getDays());
+                return StandardResponse.sendHttpResponse(true, "Successful");
+            }
         }catch (Exception e){
             return StandardResponse.sendHttpResponse(false, "Could not subscribe to plan");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> unSubscribeToPlan(Long accountId){
+        try {
+            removeSubFromAccount(accountId);
+            return StandardResponse.sendHttpResponse(true, "Successful");
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not unsubscribe from plan");
+        }
+    }
+
+    public void removeSubFromAccount(Long accountId){
+        Account account = accountRepository.findById(accountId).get();
+        if(!account.getSubName().isEmpty()){
+            account.setSubName("");
+            account.setSubDate(null);
+            account.setSubTime(null);
+            account.setScheducleId("");
+            account.setKiloGrams(0);
+            account.setSubscriptionType("");
+            accountRepository.save(account);
         }
     }
 }

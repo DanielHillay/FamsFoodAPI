@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,8 +21,11 @@ public class Account {
     private Long accountId;
     private String accountType;
     private String userId;
-    private String timeTableId;
+    private String scheducleId;
     private double kiloGrams;
-    private double subscriptionType;
+    private String subscriptionType;
+    private String subName;
+    private Date subDate;
+    private LocalDateTime subTime;
     private double accountBalance;
 }

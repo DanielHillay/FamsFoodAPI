@@ -17,6 +17,6 @@ public class Subscription {
     private Long id;
     private String subName;
     private String subId;
-    private int days;
+    private Long days;
     private double price;
 }
