@@ -8,6 +8,13 @@ import org.springframework.stereotype.Service;
 public class DashboardService {
 
     public ResponseEntity<StandardResponse> getDashBoardInfo(Long id) {
-        return null;
+
+        try {
+            //Get number of meals ordered
+
+            return StandardResponse.sendHttpResponse(true, "Successful");
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not get dashbord info");
+        }
     }
 }

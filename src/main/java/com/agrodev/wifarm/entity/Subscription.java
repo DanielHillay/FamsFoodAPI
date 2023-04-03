@@ -17,6 +17,7 @@ public class Subscription {
     private Long id;
     private String subName;
     private String subId;
+    private String subscriptionType;//Flexible or strict
     private Long days;
     private double price;
 }

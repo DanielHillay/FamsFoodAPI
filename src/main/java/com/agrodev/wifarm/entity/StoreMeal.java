@@ -18,6 +18,7 @@ public class StoreMeal {
     private String description;
     private double mealPrice;
     private boolean isAvailable;
+    private double rating;
     private double quantityAvailable;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "MEAL_ITEMS",
