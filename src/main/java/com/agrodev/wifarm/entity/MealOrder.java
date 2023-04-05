@@ -18,6 +18,7 @@ public class MealOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String orderId;
+    private String userId;
     private String mealName;
     private String mealId;
     private double mealWeight;
