@@ -19,4 +19,8 @@ public class DashBoardController {
     public ResponseEntity<StandardResponse> getDashBoardInfo(@RequestParam("id") Long id){
         return dashboardService.getDashBoardInfo(id);
     }
+    @GetMapping("/getdashboardforuser")
+    public ResponseEntity<StandardResponse> getDashboardInfoForUser(@RequestParam("id") Long id){
+        return dashboardService.getUserDashboardInfo(id);
+    }
 }
