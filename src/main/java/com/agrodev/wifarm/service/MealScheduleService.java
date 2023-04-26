@@ -41,10 +41,10 @@ public class MealScheduleService {
                 scheme.setScheduleId(mealSchedule.getScheduleId());
                 scheme.setDay(i);
                 scheme.setSchemeId(String.format(String.format("%04d", customRand.nextInt(10000))));
-                for(MealTime times : request.getTimeList().get(i)){
-                    times.setSchemeId(scheme.getSchemeId());
+                for(MealTiming times : request.getTimeList().get(i)){
+                    times.setFeedingSchemeId(scheme.getSchemeId());
                     scheme.getMealTimesList().add(mealTimeRepo.save(times));
-                    double weight = userMealRepo.findByMealId(times.getMealId()).get().getWeight();
+                    double weight = userMealRepo.findByMealId(times.getUserMealId()).get().getWeight();
                     schemeWeight = schemeWeight + weight;
                 }
                 scheme.setWeight(schemeWeight);

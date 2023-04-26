@@ -18,6 +18,7 @@ public class MealSchedule {
     private int duration;
     private int totalNumberOfMeals;
     private double weight;
+    private String userId;
     private String accountNumber;
     private String userCode;
 }

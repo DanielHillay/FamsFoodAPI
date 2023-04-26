@@ -28,7 +28,7 @@ public class StoreMeal {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "STOREMEAL_ITEMS",
             joinColumns = {
-                    @JoinColumn(name = "MEAL_ID")
+                    @JoinColumn(name = "MEALS_ID")
             },
             inverseJoinColumns = {
                     @JoinColumn(name = "ITEM_ID")

@@ -1,7 +1,7 @@
 package com.agrodev.wifarm.entity.Pojo;
 
 import com.agrodev.wifarm.entity.MealSchedule;
-import com.agrodev.wifarm.entity.MealTime;
+import com.agrodev.wifarm.entity.MealTiming;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -13,5 +13,5 @@ public class ScheduleRequest {
 
     private String requestId;
     private MealSchedule schedule;
-    private List<List<MealTime>> timeList;
+    private List<List<MealTiming>> timeList;
 }

@@ -23,12 +23,12 @@ public class UserMeal {
     private double percentageProtein;
     private double percentageFat;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "MEAL_ITEMS",
+    @JoinTable(name = "USERMEAL_ITEMS",
             joinColumns = {
-                    @JoinColumn(name = "MEAL_ID")
+                    @JoinColumn(name = "MEALL_ID")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "ITEM_ID")
+                    @JoinColumn(name = "ITEMS_ID")
             }
     )
     private Set<FoodItems> foodItems;

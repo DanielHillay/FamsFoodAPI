@@ -22,7 +22,7 @@ public class FeedingScheme {
     private double percentageProtein;
     private double percentageFat;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "MEAL_TIME",
+    @JoinTable(name = "FOOD_TIMES",
             joinColumns = {
                     @JoinColumn(name = "SCHEME_ID")
             },
@@ -30,5 +30,5 @@ public class FeedingScheme {
                     @JoinColumn(name = "MEAL_ID")
             }
     )
-    private List<MealTime> mealTimesList;
+    private List<MealTiming> mealTimesList;
 }
