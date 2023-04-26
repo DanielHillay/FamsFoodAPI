@@ -11,16 +11,19 @@ import javax.persistence.Id;
 @Entity
 @RequiredArgsConstructor
 @Data
-public class Subscription {
+public class StoreFoodItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String subName;
-    private String subId;
+    private String itemName;
+    private String itemId;
+    private String itemCategory;
+    private double itemPrice;
     private double weight;
-    private int numberOfMeals;
-    private String subscriptionType;//Flexible or strict
-    private boolean isFlexible;
-    private Long days;
-    private double price;
+    private double units;
+    private String description;
+    private String imageUrl;
+    private String currency;
+    private boolean isAvailable;
+    private double quantityAvailableInKG;
 }

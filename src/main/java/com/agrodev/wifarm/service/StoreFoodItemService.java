@@ -2,17 +2,19 @@ package com.agrodev.wifarm.service;
 
 import com.agrodev.wifarm.entity.FoodItems;
 import com.agrodev.wifarm.entity.StandardResponse;
+import com.agrodev.wifarm.entity.StoreFoodItem;
 import com.agrodev.wifarm.repository.FoodItemRepository;
+import com.agrodev.wifarm.repository.StoreFoodItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FoodItemService {
+public class StoreFoodItemService {
     @Autowired
-    private FoodItemRepository foodItemRepository;
+    private StoreFoodItemRepo foodItemRepository;
 
-    public ResponseEntity<StandardResponse> createFoodItem(FoodItems foodItems) {
+    public ResponseEntity<StandardResponse> createFoodItem(StoreFoodItem foodItems) {
         try {
             return StandardResponse.sendHttpResponse(true, "Successful", foodItemRepository.save(foodItems));
         } catch (Exception e) {
@@ -20,7 +22,7 @@ public class FoodItemService {
         }
     }
 
-    public ResponseEntity<StandardResponse> updateFoodItem(FoodItems foodItems) {
+    public ResponseEntity<StandardResponse> updateFoodItem(StoreFoodItem foodItems) {
         try {
             return StandardResponse.sendHttpResponse(true, "Successful", foodItemRepository.save(foodItems));
         } catch (Exception e) {

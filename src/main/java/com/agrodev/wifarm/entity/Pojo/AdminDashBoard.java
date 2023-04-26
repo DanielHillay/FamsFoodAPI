@@ -14,6 +14,9 @@ public class AdminDashBoard {
     private double numberOfOrders;
     private double numberOfSubscribers;
     private double totalRevenue;
+    private double fulfilledOrders;
+    private double noOfStoreMeals;
+    private double foodItems;
     private double totalOrdersInKg;
     private double pendingOrders;
     private List<StoreMeal> storeMeals;

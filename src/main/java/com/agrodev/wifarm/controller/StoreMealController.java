@@ -1,5 +1,6 @@
 package com.agrodev.wifarm.controller;
 
+import com.agrodev.wifarm.entity.Pojo.StoreMealRequest;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.entity.StoreMeal;
 import com.agrodev.wifarm.service.StoreMealService;
@@ -14,12 +15,16 @@ public class StoreMealController {
     private StoreMealService mealService;
 
     @PostMapping("/createmeal")
-    public ResponseEntity<StandardResponse> createStoreMeal(@RequestBody StoreMeal storeMeal){
+    public ResponseEntity<StandardResponse> createStoreMeal(@RequestBody StoreMealRequest storeMeal){
         return mealService.createStoreMeal(storeMeal);
     }
     @PutMapping("/updatemeal")
     public ResponseEntity<StandardResponse> updateMeal(@RequestBody StoreMeal storeMeal){
         return mealService.updateStoreMeal(storeMeal);
+    }
+    @PostMapping("/topupmeal")
+    public ResponseEntity<StandardResponse> topUp(@RequestParam("mealId") String mealId, @RequestParam("weight") double weight){
+        return mealService.topUpMeal(mealId, weight);
     }
     @GetMapping("/getmeal")
     public ResponseEntity<StandardResponse> getStoreMeal(@RequestParam("id") Long id){

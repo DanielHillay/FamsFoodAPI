@@ -71,9 +71,9 @@ public class SubcriptionService {
         }
     }
 
-    public ResponseEntity<StandardResponse> subscribeToPlan(Long accountId, Long subId, String scheduleId) {
+    public ResponseEntity<StandardResponse> subscribeToPlan(String userId, Long subId, String scheduleId) {
         try {
-            Account account = accountRepository.findById(accountId).get();
+            Account account = accountRepository.findByUserId(userId).get();
             Subscription sub = subscriptionRepo.findById(subId).get();
             if(!account.getSubName().isEmpty()){
                 return StandardResponse.sendHttpResponse(true, "This account is already subscribed to a plan");
@@ -81,7 +81,7 @@ public class SubcriptionService {
                 account.setSubName(sub.getSubName());
                 account.setSubDate(new Date());
                 account.setSubTime(LocalDateTime.now());
-                account.setScheducleId(scheduleId);
+                account.setScheduleId(scheduleId);
 
                 accountRepository.save(account);
                 updateService.endSubscription(account.getAccountId(), sub.getDays());
@@ -107,7 +107,7 @@ public class SubcriptionService {
             account.setSubName("");
             account.setSubDate(null);
             account.setSubTime(null);
-            account.setScheducleId("");
+            account.setScheduleId("");
             account.setKiloGrams(0);
             account.setSubscriptionType("");
             accountRepository.save(account);

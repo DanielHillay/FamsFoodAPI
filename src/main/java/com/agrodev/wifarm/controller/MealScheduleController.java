@@ -1,6 +1,7 @@
 package com.agrodev.wifarm.controller;
 
 import com.agrodev.wifarm.entity.MealSchedule;
+import com.agrodev.wifarm.entity.Pojo.ScheduleRequest;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.service.MealScheduleService;
 import com.sendgrid.Response;
@@ -16,7 +17,7 @@ public class MealScheduleController {
     private MealScheduleService mealScheduleService;
 
     @PostMapping("/createschedule")
-    public ResponseEntity<StandardResponse> createSchedule(@RequestBody MealSchedule mealSchedule){
+    public ResponseEntity<StandardResponse> createSchedule(@RequestBody ScheduleRequest mealSchedule){
         return mealScheduleService.createSchedule(mealSchedule);
     }
     @PutMapping("/updateschedule")

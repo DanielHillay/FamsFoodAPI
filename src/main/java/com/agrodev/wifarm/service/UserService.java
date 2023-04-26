@@ -1,6 +1,7 @@
 package com.agrodev.wifarm.service;
 
 import com.agrodev.wifarm.entity.*;
+import com.agrodev.wifarm.repository.AccountRepository;
 import com.agrodev.wifarm.repository.AdminRepository;
 import com.agrodev.wifarm.repository.RoleRepository;
 import com.agrodev.wifarm.repository.UserRepository;
@@ -25,6 +26,8 @@ public class UserService {
     private UserRepository userRepo;
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private AccountRepository accountRepository;
     @Autowired
     private RoleRepository roleRepo;
     @Autowired
@@ -110,6 +113,12 @@ public class UserService {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
 
                 Account account = new Account();
+                account.setUserId(user.getUserId());
+                account.setKiloGrams(0);
+                account.setAccountBalance(0);
+                account.setAccountNummber(UUID.randomUUID().toString());
+
+                accountRepository.save(account);
 
                 NService.sendNotificationOTP(user, "Thank you for signing up. <br /> Use the following OTP to Validate your email <strong> " + vOtp + "</strong>" );
                 NService.sendRegistrationNotification(user);

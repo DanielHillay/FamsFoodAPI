@@ -14,18 +14,10 @@ public class MealSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String scheduleId;
-    private String day;
     private String scheduleName;
-    private String duration;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "USERMEAL_SCHEDULE",
-            joinColumns = {
-                    @JoinColumn(name = "SCHEDULE_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "MEAL_ID")
-            }
-    )
-    private Set<UserMeal> userMeals;
+    private int duration;
+    private int totalNumberOfMeals;
+    private double weight;
+    private String accountNumber;
+    private String userCode;
 }

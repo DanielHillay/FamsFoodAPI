@@ -4,6 +4,7 @@ import com.agrodev.wifarm.entity.MealOrder;
 import com.agrodev.wifarm.entity.Pojo.MealOrderRequest;
 import com.agrodev.wifarm.entity.StandardResponse;
 import com.agrodev.wifarm.repository.OrderRepository;
+import com.agrodev.wifarm.util.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,19 @@ import java.util.Random;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
-
-
+    @Autowired
+    private UpdateService updateService;
     public ResponseEntity<StandardResponse> submitOrder(MealOrderRequest mealOrders) {
         try {
             Random customerRand = new Random();
             if(mealOrders.getOrderList().isEmpty()) {
-                MealOrder mealOrder = new MealOrder();
+                MealOrder mealOrder = mealOrders.getMealOrder();
                 mealOrder.setOrderId(String.format("%08d", customerRand.nextInt(100000000)));
                 mealOrder.setOrderDate(new Date());
                 mealOrder.setOrderTime(LocalDateTime.now());
                 mealOrder.setUserAddress(mealOrders.getAddress());
                 mealOrder.setDelivered(false);
                 mealOrder.setAttendedTo(false);
-
 
                 orderRepository.save(mealOrder);
                 return StandardResponse.sendHttpResponse(true, "Successful", mealOrder);

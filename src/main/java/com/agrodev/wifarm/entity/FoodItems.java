@@ -19,10 +19,9 @@ public class FoodItems {
     private String itemId;
     private String itemCategory;
     private double itemPrice;
+    private double units;
     private double weight;
     private String description;
     private String imageUrl;
-    private String currency;
-    private boolean isAvailable;
-    private double quantityAvailable;
+    private double quantityInKG;
 }

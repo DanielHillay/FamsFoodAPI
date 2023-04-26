@@ -2,19 +2,20 @@ package com.agrodev.wifarm.controller;
 
 import com.agrodev.wifarm.entity.FoodItems;
 import com.agrodev.wifarm.entity.StandardResponse;
-import com.agrodev.wifarm.service.FoodItemService;
+import com.agrodev.wifarm.entity.StoreFoodItem;
+import com.agrodev.wifarm.service.StoreFoodItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/fooditem/")
-public class FoodItemController {
+public class StoreFoodItemController {
     @Autowired
-    private FoodItemService foodItemService;
+    private StoreFoodItemService foodItemService;
 
     @PostMapping("/createfooditems")
-    public ResponseEntity<StandardResponse> createFoodItem(@RequestBody FoodItems foodItems){
+    public ResponseEntity<StandardResponse> createFoodItem(@RequestBody StoreFoodItem foodItems){
         return foodItemService.createFoodItem(foodItems);
     }
 
@@ -27,7 +28,7 @@ public class FoodItemController {
         return foodItemService.getFoodItem(id);
     }
     @PutMapping("/updatefooditem")
-    public ResponseEntity<StandardResponse> updateFoodItem(@RequestBody FoodItems foodItems){
+    public ResponseEntity<StandardResponse> updateFoodItem(@RequestBody StoreFoodItem foodItems){
         return foodItemService.updateFoodItem(foodItems);
     }
     @DeleteMapping("/deleteallfooditems")

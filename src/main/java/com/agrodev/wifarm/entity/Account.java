@@ -20,11 +20,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
     private String accountType;
+    private String accountNummber;
     private String userId;
-    private String scheducleId;
+    private String scheduleId;
     private double kiloGrams;
     private String subscriptionType;
     private String subName;
+    private boolean isLimited;
     private Date subDate;
     private LocalDateTime subTime;
     private double accountBalance;

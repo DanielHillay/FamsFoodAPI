@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Data
@@ -13,6 +14,7 @@ public class MealOrderRequest {
 
     private String mealId;
     private MealOrder mealOrder;
+    private Map<String, Long> foodItems;
     private String userId;
     private String address;
     private double totalAmount;

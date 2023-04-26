@@ -32,9 +32,9 @@ public class SubscriptionController {
         return subscriptionService.updateSubPlan(subscription);
     }
     @PostMapping("/subscribe")
-    public ResponseEntity<StandardResponse> subscribeToPlan(@RequestParam("subId") Long subId, @RequestParam("accountId") Long accountId,
+    public ResponseEntity<StandardResponse> subscribeToPlan(@RequestParam("subId") Long subId, @RequestParam("accountId") String userId,
                                                             @RequestParam("scheduleId") String scheduleId){
-        return subscriptionService.subscribeToPlan(accountId, subId, scheduleId);
+        return subscriptionService.subscribeToPlan(userId, subId, scheduleId);
     }
     @DeleteMapping("/deletesubplan")
     public ResponseEntity<StandardResponse> deleteSubPlan(@RequestParam("id") Long id){
