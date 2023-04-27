@@ -15,6 +15,7 @@ public class FeedingScheme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int day;
+    private String weekDay;
     private String schemeId;
     private String scheduleId;
     private double weight;

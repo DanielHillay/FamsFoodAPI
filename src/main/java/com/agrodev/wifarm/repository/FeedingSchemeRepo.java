@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FeedingSchemeRepo extends JpaRepository<FeedingScheme, Long> {
     List<FeedingScheme> findAllByScheduleId(String scheduleId);
+
+    List<FeedingScheme> findByWeekDay(String weekDay);
 }
