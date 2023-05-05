@@ -19,6 +19,10 @@ public class FeedingScheme {
     private String schemeId;
     private String scheduleId;
     private double weight;
+    private String LGA;
+    private Long townId;
+    private String state;
+    private String country;
     private double percentageCarbohydrate;
     private double percentageProtein;
     private double percentageFat;

@@ -21,6 +21,10 @@ public class MealOrder {
     private String userId;
     private String mealName;
     private String mealId;
+    private String LGA;
+    private String town;
+    private String state;
+    private String country;
     private double mealWeight;
     private double mealPrice;
     private boolean isDelivered;

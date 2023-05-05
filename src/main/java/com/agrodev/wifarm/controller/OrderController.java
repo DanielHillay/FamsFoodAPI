@@ -21,7 +21,7 @@ public class OrderController {
     }
     @GetMapping("/getallpendingorders")
     public ResponseEntity<StandardResponse> getPendingOrders(){
-        return orderService.getPendingOrders();
+        return orderService.getPendingAllOrders();
     }
 
     @GetMapping("/getallfulfilledorders")

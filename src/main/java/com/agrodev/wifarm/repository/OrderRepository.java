@@ -15,4 +15,12 @@ public interface OrderRepository extends JpaRepository<MealOrder, Long> {
     List<MealOrder> findByUserId(String userId);
 
     List<MealOrder> findByIsDelivered(boolean b);
+
+    List<MealOrder> findByIsAttendedToAndState(boolean b, String filter);
+
+    List<MealOrder> findByIsAttendedToAndLGA(boolean b, String filter);
+
+    List<MealOrder> findByIsAttendedToAndTown(boolean b, String filter);
+
+    List<MealOrder> findByIsAttendedToAndCountry(boolean b, String filter);
 }

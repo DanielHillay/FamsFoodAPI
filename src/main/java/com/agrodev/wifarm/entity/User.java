@@ -15,13 +15,15 @@ public class User {
     private Long id;
     private String userName;
     private String email;
-
     private String userId;
-
     private String firstName;
     private String phoneNumber;
-
     private String tag;
+    private String LGA;
+    private String town;
+    private String State;
+    private String country;
+    private String userAddress;
     private String verificationOtp;
     private String oneTimePassword;
     private Date otpRequestTime;

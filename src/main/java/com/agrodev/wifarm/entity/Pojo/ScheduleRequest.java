@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 public class ScheduleRequest {
 
-    private String requestId;
     private MealSchedule schedule;
     private List<List<MealTiming>> timeList;
 }

@@ -17,6 +17,10 @@ public class UserMeal {
     private String mealId;
     private String userId;
     private double mealPrice;
+    private String LGA;
+    private String town;
+    private String State;
+    private String country;
     private double weight;
     private boolean isFavourite;
     private double percentageCarbohydrate;

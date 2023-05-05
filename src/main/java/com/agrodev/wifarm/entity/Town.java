@@ -11,12 +11,10 @@ import javax.persistence.Id;
 @Entity
 @RequiredArgsConstructor
 @Data
-public class MealTiming {
+public class Town {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String feedingSchemeId;
-    private String weekDay;
-    private String mealTime;
-    private String userMealId;
+    private String Town;
+
 }

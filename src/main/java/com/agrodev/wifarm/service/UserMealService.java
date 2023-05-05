@@ -1,13 +1,11 @@
 package com.agrodev.wifarm.service;
 
-import com.agrodev.wifarm.entity.FoodItems;
+import com.agrodev.wifarm.entity.*;
 import com.agrodev.wifarm.entity.Pojo.UserMealRequest;
-import com.agrodev.wifarm.entity.StandardResponse;
-import com.agrodev.wifarm.entity.StoreFoodItem;
-import com.agrodev.wifarm.entity.UserMeal;
 import com.agrodev.wifarm.repository.FoodItemRepository;
 import com.agrodev.wifarm.repository.StoreFoodItemRepo;
 import com.agrodev.wifarm.repository.UserMealRepository;
+import com.agrodev.wifarm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,8 @@ public class UserMealService {
     @Autowired
     private UserMealRepository userMealRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private StoreFoodItemRepo storeFoodItemRepo;
     @Autowired
     private FoodItemRepository foodItemRepository;
@@ -30,6 +30,7 @@ public class UserMealService {
             double mealWeight = 0;
             double mealPrice = 0;
             UserMeal meal = new UserMeal();
+            User user = userRepository.findByUserId(request.getUserId()).get();
             for(Map.Entry<String, Integer> entry : request.getFoodItems().entrySet()){
                 StoreFoodItem storeFoodItem = storeFoodItemRepo.findByItemName(entry.getKey()).get();
                 FoodItems foodItem = new FoodItems();
@@ -47,6 +48,10 @@ public class UserMealService {
             }
             meal.setMealName(request.getMealName().isEmpty() ? request.getUserId() : request.getMealName());
             meal.setUserId(request.getUserId());
+            meal.setLGA(user.getLGA());
+            meal.setCountry(user.getCountry());
+            meal.setState(user.getState());
+            meal.setTown(user.getTown());
             meal.setWeight(mealWeight);
             meal.setMealPrice(mealPrice);
 

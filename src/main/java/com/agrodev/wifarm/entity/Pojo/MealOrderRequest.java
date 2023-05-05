@@ -12,11 +12,7 @@ import java.util.Map;
 @Data
 public class MealOrderRequest {
 
-    private String mealId;
     private MealOrder mealOrder;
-    private Map<String, Long> foodItems;
     private String userId;
-    private String address;
-    private double totalAmount;
     private List<MealOrder> orderList;
 }

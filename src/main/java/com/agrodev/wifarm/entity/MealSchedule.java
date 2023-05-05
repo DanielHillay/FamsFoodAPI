@@ -15,10 +15,14 @@ public class MealSchedule {
     private Long id;
     private String scheduleId;
     private String scheduleName;
+    private String LGA;
+    private String town;
+    private String State;
+    private String country;
     private int duration;
     private int totalNumberOfMeals;
     private double weight;
     private String userId;
+    private boolean byUser;
     private String accountNumber;
-    private String userCode;
 }

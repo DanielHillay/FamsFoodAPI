@@ -43,6 +43,7 @@ public class MealScheduleService {
                 scheme.setSchemeId(String.format(String.format("%04d", customRand.nextInt(10000))));
                 for(MealTiming times : request.getTimeList().get(i)){
                     times.setFeedingSchemeId(scheme.getSchemeId());
+                    scheme.setWeekDay(times.getWeekDay());
                     scheme.getMealTimesList().add(mealTimeRepo.save(times));
                     double weight = userMealRepo.findByMealId(times.getUserMealId()).get().getWeight();
                     schemeWeight = schemeWeight + weight;
@@ -130,6 +131,14 @@ public class MealScheduleService {
             return StandardResponse.sendHttpResponse(true, "Successful");
         }catch (Exception e){
             return StandardResponse.sendHttpResponse(false, "Could not create schedule");
+        }
+    }
+
+    public ResponseEntity<StandardResponse> registerSchedule(MealSchedule mealSchedule) {
+        try {
+            return StandardResponse.sendHttpResponse(true, "Successful", mealScheduleRepo.save(mealSchedule));
+        } catch (Exception e) {
+            return StandardResponse.sendHttpResponse(false, "Could not register Schedule");
         }
     }
 }

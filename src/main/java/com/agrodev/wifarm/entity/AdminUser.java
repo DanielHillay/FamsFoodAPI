@@ -14,14 +14,14 @@ public class AdminUser {
     private Long id;
     private String userName;
     private String email;
-
     private String userId;
-
+    private String LGA;
+    private Long townId;
+    private String State;
+    private String country;
     private String firstName;
     private String phoneNumber;
-
     private String tag;
-    private boolean useAD;
     private String staffID;
     private String lastName;
     private String password;

@@ -20,6 +20,11 @@ public class MealScheduleController {
     public ResponseEntity<StandardResponse> createSchedule(@RequestBody ScheduleRequest mealSchedule){
         return mealScheduleService.createSchedule(mealSchedule);
     }
+
+//    @PostMapping("/registerschedule")
+//    public ResponseEntity<StandardResponse> registerSchedule(@RequestBody MealSchedule mealSchedule){
+//        return mealScheduleService.registerSchedule(mealSchedule);
+//    }
     @PutMapping("/updateschedule")
     public ResponseEntity<StandardResponse> updateSchedule(@RequestBody MealSchedule mealSchedule){
         return mealScheduleService.updateSchedule(mealSchedule);
